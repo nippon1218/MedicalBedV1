@@ -26,6 +26,8 @@ extern const	u8 modesta_buf[2];           //STA模式写入数组,此模式写入ST
 
 void WifiReceiveJudge(void);
 void Usart2ReceiveJudge(void);
+void AllInit(void);
+
 
 
 #endif

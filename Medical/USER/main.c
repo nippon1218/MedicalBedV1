@@ -60,26 +60,8 @@ int main(void)
 	u8 key;                                //按键扫描返回值
 	u8 mode_buf[2];                        //存储WiFi模式，AP还是STA模式
 	u8 angle_buf[14];                      //存储上位设定角度值
-	HAL_Init();                            //初始化HAL库   
-	Stm32_Clock_Init(360,25,2,8);          //设置时钟,180Mhz
-	delay_init(180);                       //初始化延时函数
-	uart_init(115200);                     //初始化USART
-	usart2_init(115200);                   //初始化串口2
-	usart3_init(115200);                   //初始化串口3
-	uart4_init(115200);	                   //初始化串口4
-	LED_Init();                            //初始化LED 	
-	SPI5_Init();					       //初始化SPI口
-	Motor_Dir_Init();                      //初始化电机方向口
-	Push_Rod_Init();                       //初始化曲腿电机方向口脉冲口
-	Hang_Init();                           //初始化吊挂电机方向口脉冲口
-	Push_Rod_Swash_Dry_Init();             //冲洗烘干电动杆
-	Sensor_Init();                         //初始化光电开关
-	KEY_Init();                            //初始化按键
-	Pump_Init();                           //初始化水箱   
-	PCF8574_Init();                        //初始化PCF8574/串口扩展芯片
-	NAND_Init();                           //初始化NAND FLASH			
-	W25QXX_Init();					       //初始化w25q256/SPI FLASH
 
+	AllInit();
 //	Read_Angle();                          //读取上位机设定角度值
 	
 //判断上电时的WiFi模式-默认为AP模式

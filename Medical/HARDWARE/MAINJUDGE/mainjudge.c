@@ -12,7 +12,34 @@
 #include "pump.h"
 #include "w25qxx.h"
 #include "led.h"
+#include "spi.h"
+#include "nand.h"
+#include "key.h"
 
+
+void AllInit(void)
+{
+	HAL_Init();                            //初始化HAL库   
+	Stm32_Clock_Init(360,25,2,8);          //设置时钟,180Mhz
+	delay_init(180);                       //初始化延时函数
+	uart_init(115200);                     //初始化USART
+	usart2_init(115200);                   //初始化串口2
+	usart3_init(115200);                   //初始化串口3
+	uart4_init(115200);	                   //初始化串口4
+	LED_Init();                            //初始化LED 	
+	SPI5_Init();					       //初始化SPI口
+	Motor_Dir_Init();                      //初始化电机方向口
+	Push_Rod_Init();                       //初始化曲腿电机方向口脉冲口
+	Hang_Init();                           //初始化吊挂电机方向口脉冲口
+	Push_Rod_Swash_Dry_Init();             //冲洗烘干电动杆
+	Sensor_Init();                         //初始化光电开关
+	KEY_Init();                            //初始化按键
+	Pump_Init();                           //初始化水箱   
+	PCF8574_Init();                        //初始化PCF8574/串口扩展芯片
+	NAND_Init();                           //初始化NAND FLASH			
+	W25QXX_Init();					       //初始化w25q256/SPI FLASH
+
+}
 
 
 void WifiReceiveJudge(void)
@@ -974,7 +1001,7 @@ void Usart2ReceiveJudge(void)
 /***********************************************************************************	                       
 			                 串口接收移动设备指令	
 ***********************************************************************************/		
-	
+			
 		else if(strstr((const char *)USART2_RX_BUF,(const char *)"BackUpPhone"))            //支背上
 		{
 			Uart_Back();					
@@ -1071,19 +1098,6 @@ void Usart2ReceiveJudge(void)
 		else if(strstr((const char *)USART2_RX_BUF,(const char *)"MuscleMassagerPhone"))     //肌肉按摩
 		{
 			Muscle_Massager();						
-		}
-
-		else if(strstr((const char *)USART2_RX_BUF,(const char *)"SXDJ0"))     
-		{
-			DIR6_1=0;
-			Motor_6_1_START(3600-1,motor_timer_freq);					
-		}
-		
-		else if(strstr((const char *)USART2_RX_BUF,(const char *)"SXDJ1"))   
-		{
-			DIR6_1=1;
-			Motor_6_1_START(3600-1,motor_timer_freq);
-						
 		}
 
 		else if(strstr((const char *)USART2_RX_BUF,(const char *)"Stop"))   
